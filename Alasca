@@ -1,0 +1,52 @@
+# Projeto de Previsão com Azure Machine Learning
+
+Este repositório contém um modelo de previsão criado com Azure Machine Learning. O modelo foi treinado, implantado e configurado com um ponto de extremidade (endpoint) que pode ser acessado por outras aplicações para fazer previsões.
+
+## Etapas do Projeto
+
+### 1. Criação do Repositório no GitHub
+- Foi criado um repositório no GitHub chamado `azure-ml-prediction` para armazenar o código e a documentação do projeto.
+
+### 2. Criação do Modelo de Previsão
+- O modelo de previsão foi treinado utilizando o **Azure Machine Learning Studio**.
+- O modelo foi treinado com um conjunto de dados específico, visando prever valores com base em determinadas características. Utilizamos uma técnica de regressão (ou outra técnica escolhida) para realizar o treinamento e a validação do modelo.
+
+### 3. Criação e Implantação do Endpoint
+- Após o treinamento, o modelo foi implantado como um serviço no **Azure Machine Learning Studio**.
+- Foi gerado um **endpoint (serviço web)** que pode ser acessado via HTTP para fazer previsões. O endpoint foi configurado para receber dados no formato JSON e retornar a previsão gerada pelo modelo.
+
+#### Exemplo de uso do endpoint:
+- A URL do endpoint é: `https://<nome-do-serviço>.azurewebsites.net/predict`.
+- A entrada para o modelo é no formato JSON, com as variáveis de entrada, como por exemplo:
+
+```json
+{
+    "feature1": 1.0,
+    "feature2": 2.0
+}
+
+{
+    "prediction": 10.5
+}
+
+import requests
+
+# URL do endpoint gerado no Azure
+url = "https://<nome-do-serviço>.azurewebsites.net/predict"
+
+# Dados de entrada no formato JSON
+payload = {"feature1": 1.0, "feature2": 2.0}
+
+# Cabeçalhos, incluindo a chave de autenticação
+headers = {"Authorization": "Bearer <sua-chave-de-autenticacao>"}
+
+# Realizando a requisição POST
+response = requests.post(url, json=payload, headers=headers)
+
+# Exibe a resposta do modelo
+print(response.json())  # Exibe a previsão retornada pelo modelo
+
+azure-ml-prediction/
+├── app.py             # Código Python para interagir com o modelo e o endpoint
+├── endpoints.json     # Definição dos endpoints
+├── README.md          # Documentação do projeto
